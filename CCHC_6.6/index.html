@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-T">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic Cải Cách Hành Chính Việt Nam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-header {
+            background-color: #3b82f6; /* Tailwind blue-500 */
+            color: white;
+            padding: 16px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem; /* text-lg */
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+         .card-header.sub-header {
+            background-color: #1e40af; /* Tailwind blue-800 */
+            font-size: 1rem; /* text-md */
+        }
+        .card-content {
+            padding: 20px;
+            border-top: 1px solid #e5e7eb; /* gray-200 */
+            display: none; /* Hidden by default */
+        }
+        .card-content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .card-content li {
+            margin-bottom: 8px;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .arrow-down {
+            transform: rotate(90deg);
+        }
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .pillar-card {
+            background-color: #eff6ff; /* Tailwind blue-50 */
+            border: 1px solid #bfdbfe; /* Tailwind blue-200 */
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-title {
+            font-weight: 600;
+            color: #1e40af; /* Tailwind blue-800 */
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+        .pillar-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+            color: #3b82f6;
+        }
+         .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #93c5fd; /* Tailwind blue-300 */
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 50px;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background-color: #3b82f6; /* Tailwind blue-500 */
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px #3b82f6;
+        }
+        .timeline-date {
+            font-weight: 600;
+            color: #1e40af; /* Tailwind blue-800 */
+            margin-bottom: 4px;
+            display: block;
+        }
+        .timeline-content {
+            background-color: #eff6ff; /* Tailwind blue-50 */
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe; /* Tailwind blue-200 */
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #3730a3; /* indigo-800 */
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        /* Custom scrollbar for Webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f4f8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the text */
+            left: 50%;
+            margin-left: -110px; /* Use half of the width to center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .international-card {
+            background-color: #fdfbf6;
+            border: 1px solid #e7e5e4;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 10px;
+        }
+        .international-card h4 {
+            color: #7c2d12; /* amber-800 */
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-800">Cải Cách Hành Chính ở Việt Nam</h1>
+        <p class="text-xl text-gray-600 mt-2">Thực trạng - Giải pháp - Định hướng</p>
+    </header>
+
+    <div class="container mx-auto max-w-5xl">
+        <!-- Section: Những vấn đề chung -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>I. Những Vấn Đề Chung Về Cải Cách Hành Chính (CCHC)</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>1. Khái niệm về CCHC</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li><strong>Theo nghĩa rộng:</strong> Là quá trình thay đổi cơ bản, lâu dài, liên tục về cơ cấu quyền lực hành pháp và hoạt động của bộ máy nhà nước nhằm đạt hiệu quả quản lý và phục vụ nhân dân.</li>
+                            <li><strong>Theo nghĩa hẹp:</strong> Là quá trình thay đổi nhằm nâng cao hiệu lực, hiệu quả hành chính, cải tiến tổ chức, chế độ và phương pháp hành chính.</li>
+                            <li><strong>Theo Liên Hợp Quốc (1971):</strong> Những cố gắng có chủ định nhằm đưa thay đổi cơ bản vào hệ thống hành chính nhà nước (Thể chế, cơ cấu tổ chức, nhân sự, tài chính công).</li>
+                            <li><strong>Tóm lại:</strong> CCHC nhà nước là tạo ra những thay đổi trong các yếu tố cấu thành của nền hành chính nhằm làm cho các cơ quan hành chính nhà nước hoạt động hiệu lực, hiệu quả hơn, phục vụ nhân dân, phục vụ xã hội tốt hơn.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>2. Sự cần thiết phải CCHC ở Việt Nam</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Quá trình chuyển đổi nền kinh tế từ kế hoạch hoá tập trung sang kinh tế thị trường định hướng XHCN.</li>
+                            <li>Những bất cập còn tồn tại của nền hành chính (chức năng, nhiệm vụ chưa rõ; thể chế chồng chéo, TTHC rườm rà; bộ máy cồng kềnh; đội ngũ CBCC còn yếu; quản lý tài chính công chưa phù hợp).</li>
+                            <li>Sự phát triển của khoa học - công nghệ.</li>
+                            <li>Đòi hỏi của công dân và xã hội đối với Nhà nước ngày càng cao.</li>
+                            <li>Quá trình toàn cầu hoá và hội nhập quốc tế.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Chủ trương của Đảng & Quá trình của Chính phủ -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>II. Chủ Trương Của Đảng và Quá Trình Thực Hiện CCHC Của Chính Phủ</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>1. Chủ trương, quan điểm của Đảng về CCHC nhà nước (Qua các kỳ Đại hội)</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Đại hội VI (1986)</span>
+                                <div class="timeline-content">Khởi xướng đường lối đổi mới, chỉ ra yếu kém trong tổ chức bộ máy.</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Đại hội VII (1991)</span>
+                                <div class="timeline-content">CCHC thực hiện trên diện rộng, có chiều sâu. Phương hướng: "Nhà nước thực sự là của dân, do dân và vì dân".</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">HNTW 8 Khóa VII (01/1995)</span>
+                                <div class="timeline-content">CCHC là yêu cầu cấp bách và là trọng tâm xây dựng, hoàn thiện nhà nước.</div>
+                            </div>
+                             <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Đại hội IX</span>
+                                <div class="timeline-content">Chủ trương điều chỉnh chức năng CP, bộ quản lý đa ngành, tách CQHC công quyền với tổ chức sự nghiệp.</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Đại hội X & NQTW 5 Khóa X (2007)</span>
+                                <div class="timeline-content">Đẩy mạnh CCHC, xây dựng nền hành chính dân chủ, trong sạch, vững mạnh.</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Đại hội XIII (2021)</span>
+                                <div class="timeline-content">Xây dựng Nhà nước pháp quyền XHCN trong sạch, vững mạnh. 03 đột phá chiến lược: Thể chế, Nguồn nhân lực, Kết cấu hạ tầng.</div>
+                            </div>
+                             <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">Nghị quyết 27-NQ/TW (09/11/2022)</span>
+                                <div class="timeline-content">Tiếp tục xây dựng và hoàn thiện Nhà nước pháp quyền XHCN, CCHC là trọng tâm.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>2. Quá trình thực hiện CCHC của Chính phủ</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                         <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">1994: Nghị quyết 38/CP</span>
+                                <div class="timeline-content">Cải cách TTHC trong 07 lĩnh vực. Xuất hiện mô hình "một cửa".</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">2001-2010: Chương trình tổng thể CCHC (QĐ 136/2001/QĐ-TTg)</span>
+                                <div class="timeline-content">
+                                    04 nội dung: Thể chế; Tổ chức bộ máy; CBCC; Tài chính công.
+                                    <br><span class="tag">2007 bổ sung:</span> Cải cách TTHC & Hiện đại hóa hành chính.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">2011-2020: Chương trình tổng thể CCHC (NQ 30c/NQ-CP)</span>
+                                <div class="timeline-content">
+                                    06 nội dung.
+                                    <br><span class="tag">03 Trọng tâm:</span> Cải cách thể chế; Xây dựng, nâng cao chất lượng đội ngũ CBCC (cải cách tiền lương); Nâng cao chất lượng dịch vụ hành chính và dịch vụ công.
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <span class="timeline-date">2021-2030: Chương trình tổng thể CCHC (NQ 76/NQ-CP)</span>
+                                <div class="timeline-content">
+                                    06 nội dung.
+                                    <br><span class="tag">03 Trọng tâm:</span> Cải cách thể chế; Cải cách chế độ công vụ; Xây dựng và phát triển Chính phủ điện tử, Chính phủ số.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Kết quả CCHC (6 trụ cột) -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>III. Kết Quả CCHC Thời Gian Qua (06 Trụ Cột)</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <p class="mb-4 text-gray-700">Nhấp vào từng trụ cột để xem chi tiết kết quả đạt được.</p>
+                <div class="pillar-grid">
+                    <!-- Trụ cột 1 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar1-details')">
+                        <div class="flex items-center">
+                            <span class="pillar-icon">🏛️</span>
+                            <h3 class="pillar-title">1. Cải cách thể chế</h3>
+                        </div>
+                        <div id="pillar1-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Hoàn thiện hệ thống VBQPPL (Luật Ban hành VBQPPL 2025, Luật Tổ chức CP, Luật CBCC, Luật Viên chức...).</li>
+                                <li>Tập trung xây dựng thể chế kinh tế thị trường định hướng XHCN.</li>
+                                <li>Thể chế về tổ chức bộ máy, CBCCVC được hoàn thiện.</li>
+                                <li>Tăng cường công khai, minh bạch, phát huy dân chủ.</li>
+                                <li>Công tác kiểm tra, rà soát VBQPPL được đẩy mạnh (thử nghiệm AI).</li>
+                                <li>Đảng ban hành "bộ tứ nghị quyết trụ cột" chiến lược.</li>
+                                <li>Quý I/2025: QH thông qua 04 Luật, 11 NQ; CP ban hành 65 NĐ; Bộ ban hành 89 TT.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Trụ cột 2 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar2-details')">
+                         <div class="flex items-center">
+                            <span class="pillar-icon">📜</span>
+                            <h3 class="pillar-title">2. Cải cách thủ tục hành chính (TTHC)</h3>
+                        </div>
+                        <div id="pillar2-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Nhiều văn bản quan trọng: NQ 38-CP, Đề án 30, NĐ 63/2010, NĐ 61/2018, NĐ 45/2020.</li>
+                                <li>Cắt giảm, đơn giản hóa QĐKD: 3.199/15.763 QĐKD (đến 2025).</li>
+                                <li>Đơn giản hóa TTHC nội bộ: Phê duyệt phương án đơn giản hóa 18 TTHC (BQP), thực thi 107 TTHC.</li>
+                                <li>Phân cấp giải quyết TTHC: 388/699 TTHC được phân cấp (đến T2/2025).</li>
+                                <li>Đơn giản hóa TTHC liên quan quản lý dân cư: 964/1.084 TTHC (đạt 88,92%).</li>
+                                <li>Vận hành Cổng DVC quốc gia: 3.550 TTHC trực tuyến (T3/2025), >66,7 triệu hồ sơ trực tuyến.</li>
+                                <li>Cơ chế một cửa, một cửa liên thông hiệu quả (tỷ lệ đúng hạn >97%).</li>
+                                <li>Chuyển đổi số trong cơ quan Đảng (QĐ 204-QĐ/TW ngày 29/11/2024).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Trụ cột 3 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar3-details')">
+                        <div class="flex items-center">
+                            <span class="pillar-icon">🏗️</span>
+                            <h3 class="pillar-title">3. Cải cách tổ chức bộ máy</h3>
+                        </div>
+                        <div id="pillar3-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Giai đoạn 2001-2010: Giảm 18 cơ quan CP (từ 48 xuống 30).</li>
+                                <li>Giai đoạn 2021-2026: Cơ cấu CP gồm 17 Bộ, ngành (giảm 05). Giảm 03 cơ quan thuộc CP.</li>
+                                <li>Sắp xếp bộ máy TƯ (2023): Giảm 17 Tổng cục, 10 Cục, 144 Vụ/Ban.</li>
+                                <li>Sắp xếp bộ máy địa phương (2023): Giảm 07 sở, 2.572 tổ chức cấp phòng.</li>
+                                <li>Sắp xếp ĐVSNCL (đến 31/12/2023): Còn 47.596 đơn vị (giảm 14,84% so với 2015).</li>
+                                <li>Tinh giản biên chế (2015 - 15/12/2023): 84.140 người.</li>
+                                <li>Sau sắp xếp theo NQ 18-NQ/TW (đến T3/2025): Giảm 100% tổng cục, 77,6% cục, 54,1% vụ thuộc Bộ.</li>
+                                <li>Sắp xếp ĐVHC cấp huyện, xã.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Trụ cột 4 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar4-details')">
+                        <div class="flex items-center">
+                            <span class="pillar-icon">👥</span>
+                            <h3 class="pillar-title">4. Cải cách chế độ công vụ</h3>
+                        </div>
+                        <div id="pillar4-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Hoàn thiện thể chế (Luật CBCC 2008, Luật Viên chức 2010, sửa đổi 2019).</li>
+                                <li>Chính sách mới đột phá (2023-2024):
+                                    <ul>
+                                        <li>NĐ 06/2023: Kiểm định chất lượng đầu vào công chức.</li>
+                                        <li>NĐ 73/2023: Khuyến khích, bảo vệ cán bộ năng động, sáng tạo.</li>
+                                        <li>NĐ 179/2024: Thu hút, trọng dụng người có tài năng (thay NĐ 140/2017).</li>
+                                        <li>NĐ 29/2024: Tiêu chuẩn chức danh lãnh đạo, quản lý.</li>
+                                    </ul>
+                                </li>
+                                <li>Đổi mới tuyển dụng, đào tạo, bồi dưỡng CBCCVC.</li>
+                                <li>Chuẩn bị cải cách chính sách tiền lương.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Trụ cột 5 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar5-details')">
+                         <div class="flex items-center">
+                            <span class="pillar-icon">💰</span>
+                            <h3 class="pillar-title">5. Cải cách tài chính công</h3>
+                        </div>
+                        <div id="pillar5-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Hoàn thiện chính sách thuế, thu nhập, an sinh xã hội.</li>
+                                <li>Đổi mới quản lý tài chính doanh nghiệp, cổ phần hóa, thoái vốn DNNN.</li>
+                                <li>Hoàn thiện quản lý nợ công.</li>
+                                <li>Đổi mới cơ chế phân bổ ngân sách, cơ chế tài chính cho CQHC, ĐVSNCL.</li>
+                                <li>Đẩy mạnh xã hội hóa dịch vụ công.</li>
+                                <li>Năm 2025: Nhiều NĐ, TT mới tháo gỡ vướng mắc, thúc đẩy SXKD.</li>
+                                <li>Quản lý, sử dụng tài sản công chặt chẽ.</li>
+                                <li>Đẩy nhanh giải ngân vốn đầu tư công (đến 28/02/2025 đạt 6,9% KH).</li>
+                                <li>Đổi mới cơ chế tự chủ ĐVSNCL (dự thảo NĐ sửa đổi NĐ 60/2021).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Trụ cột 6 -->
+                    <div class="pillar-card" onclick="togglePillarDetails('pillar6-details')">
+                        <div class="flex items-center">
+                            <span class="pillar-icon">💻</span>
+                            <h3 class="pillar-title">6. Xây dựng CPĐT, CP số</h3>
+                        </div>
+                        <div id="pillar6-details" class="mt-2 text-sm text-gray-600 hidden">
+                            <ul>
+                                <li>Hoàn thiện khung pháp lý (NQ 193/2025/QH15, NĐ 23/2025 về chữ ký điện tử).</li>
+                                <li>Nền tảng tích hợp chia sẻ dữ liệu quốc gia (NDXP): 236,6 triệu giao dịch (đầu 2025).</li>
+                                <li>Trục liên thông văn bản quốc gia: >47,8 triệu văn bản (đến T2/2025).</li>
+                                <li>Số hóa sổ hộ tịch: 42 địa phương hoàn thành, >133 triệu dữ liệu (T3/2025).</li>
+                                <li>Hệ thống eCabinet: Phục vụ 115 phiên họp, xử lý 2.853 phiếu (đến T2/2025).</li>
+                                <li>Cung cấp DVC trực tuyến: Tỷ lệ hồ sơ trực tuyến Bộ ngành 58,93%, địa phương 51,27% (T2/2025).</li>
+                                <li>Tỷ lệ số hóa hồ sơ, KQGQ TTHC: Bộ ngành 55,93%, địa phương 62,61%.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Đánh giá chung -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>IV. Đánh Giá Chung</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>1. Những mặt tích cực</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Triển khai quyết liệt, thống nhất, đồng bộ theo chủ trương của Đảng, NQ của Chính phủ, bám sát thực tiễn.</li>
+                            <li>Đạt nhiều kết quả tích cực trên tất cả các lĩnh vực, có mặt mang tính đột phá (thể chế, tổ chức bộ máy, công vụ, chuyển đổi số).</li>
+                            <li>Cải cách TTHC gắn với chuyển đổi số đạt nhiều kết quả, cải thiện phục vụ người dân, doanh nghiệp.</li>
+                            <li>Sắp xếp, tinh gọn bộ máy đạt kết quả quan trọng.</li>
+                            <li>Cải cách chế độ công vụ có nhiều đổi mới, chính sách kịp thời.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>2. Những tồn tại, hạn chế</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Lãnh đạo, chỉ đạo CCHC một số nơi chưa quyết liệt, nguồn lực hạn chế.</li>
+                            <li>Đụng chạm lợi ích cá nhân, nhóm, ngành gây khó khăn.</li>
+                            <li>Thể chế, pháp luật chưa đồng bộ; TTHC còn rào cản, phức tạp, nhũng nhiễu.</li>
+                            <li>Chất lượng đội ngũ CBCC chưa đáp ứng; còn tình trạng sợ sai, sợ trách nhiệm.</li>
+                            <li>Bộ máy hành chính đổi mới còn chậm; kỷ luật, kỷ cương còn lỏng lẻo.</li>
+                            <li>Cung cấp DVCTT còn hình thức, hiệu quả chưa cao; kết nối, chia sẻ dữ liệu chưa thông suốt.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>3. Nguyên nhân của những tồn tại, hạn chế</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Lãnh đạo, chỉ đạo có nơi chưa quyết liệt, thiếu sáng tạo; người đứng đầu chưa trực tiếp chỉ đạo.</li>
+                            <li>Chất lượng CBCCVC tham mưu CCHC một số nơi hạn chế, chưa đồng đều.</li>
+                            <li>Chấp hành kỷ luật, kỷ cương công vụ chưa cao; lúng túng xử lý vấn đề mới.</li>
+                            <li>Thông tin, tuyên truyền CCHC, nhất là DVCTT chưa hiệu quả; phần mềm chưa thân thiện.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Bài học kinh nghiệm -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>V. Bài Học Kinh Nghiệm</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Đặt dưới sự lãnh đạo của Đảng, quản lý của chính quyền, tham gia của MTTQ và đoàn thể.</li>
+                    <li>Lấy người dân, doanh nghiệp làm trung tâm; sự hài lòng là thước đo.</li>
+                    <li>Gắn với nâng cao nhận thức, đổi mới tư duy, hành động sáng tạo; phát huy vai trò người đứng đầu.</li>
+                    <li>Kế thừa thành tựu, học hỏi kinh nghiệm quốc tế phù hợp.</li>
+                    <li>Xác định mục tiêu CCHC định lượng, khả thi, thiết thực.</li>
+                    <li>Tăng cường thanh tra, kiểm tra, giám sát; thí điểm, nhân rộng mô hình hay.</li>
+                    <li>Nâng cao năng lực đội ngũ làm CCHC; bố trí đủ nguồn lực.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section: Phương hướng, nhiệm vụ, giải pháp -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>VI. Phương Hướng, Nhiệm Vụ, Giải Pháp Đẩy Mạnh CCHC Thời Gian Tới</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>1. Về phương hướng</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <ul>
+                            <li>Tiếp tục thực hiện Chương trình tổng thể CCHC 2021-2030. Sơ kết giai đoạn 2021-2025.</li>
+                            <li>Đẩy mạnh cải cách thể chế, phân cấp, phân quyền "địa phương quyết, địa phương làm, địa phương chịu trách nhiệm".</li>
+                            <li>Đẩy mạnh cải cách TTHC, đơn giản hóa, số hóa hồ sơ.</li>
+                            <li>Tập trung sắp xếp ĐVHC cấp tỉnh, xã; xây dựng mô hình chính quyền địa phương 02 cấp.</li>
+                            <li>Tăng cường kỷ luật, kỷ cương hành chính.</li>
+                            <li>Đẩy nhanh giải ngân vốn đầu tư công; tự chủ ĐVSNCL.</li>
+                            <li>Tập trung xây dựng CPĐT, CP số; thực hiện NQ 57-NQ/TW về đột phá KHCN, ĐMST, CĐS.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header sub-header" onclick="toggleCard(this)">
+                        <span>2. Về các nhiệm vụ, giải pháp cụ thể</span>
+                        <span class="arrow">&#9654;</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="mb-2"><strong>a. Về chỉ đạo, điều hành CCHC:</strong> Tăng cường sự lãnh đạo của Đảng, vai trò Ban Chỉ đạo CCHC; kỷ luật, kỷ cương.</p>
+                        <p class="mb-2"><strong>b. Về cải cách thể chế:</strong> Xây dựng hệ thống pháp luật dân chủ, công bằng, minh bạch, lấy người dân làm trung tâm.</p>
+                        <p class="mb-2"><strong>c. Cải cách TTHC:</strong> Kiểm soát chặt chẽ TTHC mới; đẩy mạnh chuyển đổi số; nâng cao hiệu quả một cửa.</p>
+                        <p class="mb-2"><strong>d. Cải cách tổ chức bộ máy:</strong> Tinh gọn, hiệu lực, hiệu quả; phân cấp, phân quyền; sắp xếp ĐVSNCL.</p>
+                        <p class="mb-2"><strong>e. Cải cách chế độ công vụ:</strong> Nền công vụ minh bạch, trách nhiệm; xây dựng đội ngũ CBCCVC chuyên nghiệp; thực hiện chính sách tiền lương mới.</p>
+                        <p class="mb-2"><strong>f. Cải cách tài chính công:</strong> Tháo gỡ rào cản giải ngân đầu tư công; tự chủ tài chính; xã hội hóa dịch vụ công.</p>
+                        <p class="mb-2"><strong>g. Xây dựng Chính phủ điện tử, Chính phủ số:</strong> Nâng cao nhận thức, vai trò người đứng đầu; nâng cao chất lượng DVCTT; bảo đảm an toàn thông tin; đầu tư hạ tầng số.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Kinh nghiệm quốc tế -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <span>VII. Kinh Nghiệm Quốc Tế Trong CCHC</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <div class="card-content">
+                <p class="mb-4 text-gray-700">Một số bài học kinh nghiệm từ các quốc gia và khả năng áp dụng cho Việt Nam:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="international-card">
+                        <h4>🇸🇬 Singapore</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Liêm chính, trọng dụng nhân tài (meritocracy), định hướng kết quả.</li>
+                            <li>Trả lương cạnh tranh, mô hình đào tạo 70-20-10.</li>
+                            <li>Quản trị công mở, tham vấn trong hoạch định chính sách.</li>
+                            <li><span class="tag">Áp dụng cho VN:</span> Phù hợp cao (tham vấn, chính sách dựa trên bằng chứng, nhân tài).</li>
+                        </ul>
+                    </div>
+                    <div class="international-card">
+                        <h4>🇯🇵 Nhật Bản</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Hệ thống thủ tục hành chính không dùng giấy tờ (NAL).</li>
+                            <li>Ứng dụng Internet xử lý TTHC, chuẩn hóa quốc tế.</li>
+                            <li>Coi trọng ý kiến góp ý từ hiệp hội, doanh nghiệp, người dân.</li>
+                            <li>Tái cấu trúc bộ máy, giảm nhân sự.</li>
+                            <li><span class="tag">Áp dụng cho VN:</span> Phù hợp cao (số hóa, minh bạch hóa, chất lượng nhân lực).</li>
+                        </ul>
+                    </div>
+                     <div class="international-card">
+                        <h4>🇦🇺 Úc</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Hoạch định chính sách dựa trên bằng chứng (EBP).</li>
+                            <li>Đa dạng hóa nguồn cung cấp tư vấn chính sách.</li>
+                            <li>Sáp nhập các bộ có chức năng liên quan, hình thành bộ đa chức năng.</li>
+                            <li><span class="tag">Áp dụng cho VN:</span> Phù hợp (chính sách dựa trên bằng chứng, tinh giản bộ máy).</li>
+                        </ul>
+                    </div>
+                    <div class="international-card">
+                        <h4>🇪🇪 Estonia</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Quyết tâm chính trị cao, trách nhiệm người đứng đầu trong CP số.</li>
+                            <li>Cổng DVCQG cung cấp 99% dịch vụ thiết yếu trực tuyến.</li>
+                            <li>Nền tảng X-Road kết nối, chia sẻ dữ liệu phi tập trung, an toàn.</li>
+                            <li><span class="tag">Áp dụng cho VN:</span> Phù hợp cao (hoàn thiện thể chế CP số, hạ tầng, an ninh mạng).</li>
+                        </ul>
+                    </div>
+                     <div class="international-card">
+                        <h4>🇰🇷 Hàn Quốc</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Hoàn tất kết nối mạng trực tuyến từ trung ương đến địa phương.</li>
+                            <li>Hạ tầng thuận lợi cho xử lý công việc hành chính qua mạng điện tử.</li>
+                           <li><span class="tag">Áp dụng cho VN:</span> Phù hợp (đầu tư hạ tầng CP số).</li>
+                        </ul>
+                    </div>
+                    <div class="international-card">
+                        <h4>🇳🇿 New Zealand</h4>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>Mô hình chính quyền hai cấp, tinh gọn bộ máy.</li>
+                            <li>Thu hút nhân tài, mềm hóa quản lý công chức (hợp đồng có thời hạn).</li>
+                           <li><span class="tag">Áp dụng cho VN:</span> Phù hợp (tinh giản bộ máy, đổi mới tuyển dụng).</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="mt-6">
+                    <h4 class="font-semibold text-lg mb-2 text-blue-700">Bảng tóm tắt khả năng áp dụng kinh nghiệm quốc tế cho Việt Nam:</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b text-left text-blue-800">Trụ cột CCHC</th>
+                                    <th class="py-2 px-4 border-b text-left text-blue-800">Bài học từ các nước tiêu biểu</th>
+                                    <th class="py-2 px-4 border-b text-left text-blue-800">Khả năng áp dụng cho VN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Cải cách thể chế</td>
+                                    <td class="py-2 px-4 border-b text-sm">Singapore, Nhật Bản, Úc, Canada: Liêm chính, tham vấn, dựa trên bằng chứng, minh bạch.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp cao</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Cải cách TTHC</td>
+                                    <td class="py-2 px-4 border-b text-sm">Nhật Bản, Singapore: Số hóa, chuẩn hóa quốc tế, một cửa.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp cao</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Cải cách tổ chức bộ máy</td>
+                                    <td class="py-2 px-4 border-b text-sm">New Zealand, Nhật Bản, Úc: Tinh gọn, giảm đầu mối, sáp nhập đa chức năng.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Cải cách chế độ công vụ</td>
+                                    <td class="py-2 px-4 border-b text-sm">Singapore, New Zealand, Nhật Bản: Trọng dụng nhân tài, lương cạnh tranh, đào tạo, thi tuyển.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp cao</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Cải cách tài chính công</td>
+                                    <td class="py-2 px-4 border-b text-sm">Đức, Thụy Điển: Cắt giảm chi phí, quản lý hiệu quả, đảm bảo an sinh.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">Xây dựng CPĐT, CP số</td>
+                                    <td class="py-2 px-4 border-b text-sm">Estonia, Hàn Quốc, Thụy Điển: Quyết tâm chính trị, hạ tầng, nền tảng chia sẻ, an ninh mạng.</td>
+                                    <td class="py-2 px-4 border-b text-sm"><span class="tag">Phù hợp cao</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-sm text-gray-500">Nguồn thông tin: Tài liệu "CHUYÊN ĐỀ CẢI CÁCH HÀNH CHÍNH Ở NƯỚC TA - THỰC TRẠNG VÀ GIẢI PHÁP".</p>
+            <p class="text-xs text-gray-400 mt-1">Infographic được tạo tự động và có tính chất tham khảo.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const arrow = headerElement.querySelector('.arrow');
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                if(arrow) arrow.classList.add('arrow-down');
+            } else {
+                content.style.display = "none";
+                 if(arrow) arrow.classList.remove('arrow-down');
+            }
+        }
+
+        function togglePillarDetails(pillarId) {
+            const detailsDiv = document.getElementById(pillarId);
+            if (detailsDiv.classList.contains('hidden')) {
+                detailsDiv.classList.remove('hidden');
+            } else {
+                detailsDiv.classList.add('hidden');
+            }
+        }
+
+        // Automatically open the first main card for better initial view
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstCardHeader = document.querySelector('.card > .card-header');
+            if (firstCardHeader) {
+                // toggleCard(firstCardHeader);
+            }
+        });
+    </script>
+</body>
+</html>
