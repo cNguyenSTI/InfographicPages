@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VietChip Alliance Infographic - Chi tiết</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .infographic-container {
+            max-width: 1080px;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        /* Color Palette */
+        :root {
+            --blue-primary: #0078D4;
+            --blue-dark: #005B99;
+            --blue-light: #E3F2FD;
+            --orange-primary: #FF5722;
+            --orange-light: #FFDDCF;
+            --red-light: #FFEDED;
+        }
+        .bg-blue-primary { background-color: var(--blue-primary); }
+        .text-blue-primary { color: var(--blue-primary); }
+        .bg-blue-dark { background-color: var(--blue-dark); }
+        .bg-blue-light { background-color: var(--blue-light); }
+        .bg-orange-primary { background-color: var(--orange-primary); }
+        .text-orange-primary { color: var(--orange-primary); }
+        .bg-orange-light { background-color: var(--orange-light); }
+        .bg-red-light { background-color: var(--red-light); }
+        .dot-orange { background-color: var(--orange-primary); }
+
+        /* Interactivity */
+        .clickable-section {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .clickable-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 120, 212, 0.15);
+        }
+        .bar-vertical:hover, .bar-horizontal:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #eee;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .modal-source {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 1.5rem;
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+        }
+        .modal-source a {
+            color: var(--blue-primary);
+            text-decoration: none;
+        }
+        .modal-source a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="infographic-container">
+        <!-- 1. Tiêu đề -->
+        <header class="bg-blue-dark text-white p-8 text-center relative">
+            <h1 class="text-3xl md:text-4xl font-black uppercase">VietChip Alliance</h1>
+            <p class="text-lg md:text-xl mt-2">Đề xuất xây dựng nhà máy sản xuất chip bán dẫn đầu tiên tại Việt Nam</p>
+            <i class="ph-fill ph-cpu text-6xl text-orange-primary absolute top-4 right-6 opacity-80"></i>
+        </header>
+
+        <main class="p-6 md:p-10 space-y-12">
+            <!-- 2. Mục tiêu và tầm nhìn -->
+            <section id="muc-tieu" class="p-4 rounded-lg clickable-section">
+                <h2 class="text-2xl font-bold text-blue-primary text-center">Mục tiêu và Tầm nhìn</h2>
+                <p class="text-center text-lg mt-2 font-semibold">Xây dựng nhà máy sản xuất chip đạt chuẩn 28nm, hướng tới 14nm trong 5 năm.</p>
+                <div class="mt-6">
+                    <h3 class="text-center font-bold text-gray-700 mb-4">Phục vụ các lĩnh vực trọng yếu:</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center text-orange-primary">
+                        <div class="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="ph-bold ph-broadcast text-5xl"></i><span class="mt-2 font-semibold text-gray-800">Viễn thông</span>
+                        </div>
+                        <div class="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="ph-bold ph-shield text-5xl"></i><span class="mt-2 font-semibold text-gray-800">Quốc phòng</span>
+                        </div>
+                        <div class="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="ph-bold ph-plugs-connected text-5xl"></i><span class="mt-2 font-semibold text-gray-800">IoT</span>
+                        </div>
+                         <div class="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="ph-bold ph-brain text-5xl"></i><span class="mt-2 font-semibold text-gray-800">AI</span>
+                        </div>
+                        <div class="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="ph-bold ph-stethoscope text-5xl"></i><span class="mt-2 font-semibold text-gray-800">Thiết bị y tế</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="border-gray-200">
+
+            <!-- 3. Chiến lược triển khai -->
+            <section id="chien-luoc" class="p-4 rounded-lg clickable-section">
+                <h2 class="text-2xl font-bold text-blue-primary text-center">Chiến lược triển khai</h2>
+                <div class="relative mt-8 px-4">
+                    <div class="absolute h-1 bg-gray-300 w-full left-0 top-1/2 -translate-y-1/2"></div>
+                    <div class="relative flex justify-between items-start">
+                        <div class="w-1/3 text-center">
+                            <div class="relative mb-2 flex justify-center"><div class="w-4 h-4 rounded-full dot-orange z-10"></div></div>
+                            <div class="bg-blue-light p-4 rounded-lg shadow-md"><p class="font-bold text-gray-800">2025–2027</p><p class="text-sm mt-1">Xây dựng & Đào tạo</p></div>
+                        </div>
+                         <div class="w-1/3 text-center">
+                            <div class="relative mb-2 flex justify-center"><div class="w-4 h-4 rounded-full dot-orange z-10"></div></div>
+                            <div class="bg-blue-light p-4 rounded-lg shadow-md"><p class="font-bold text-gray-800">2027–2030</p><p class="text-sm mt-1">Sản xuất & Thương mại</p></div>
+                        </div>
+                        <div class="w-1/3 text-center">
+                            <div class="relative mb-2 flex justify-center"><div class="w-4 h-4 rounded-full dot-orange z-10"></div></div>
+                            <div class="bg-blue-light p-4 rounded-lg shadow-md"><p class="font-bold text-gray-800">2030–2035</p><p class="text-sm mt-1">Nâng cấp & Mở rộng</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-200">
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- 4. Hỗ trợ từ chính phủ -->
+                <section id="ho-tro" class="p-4 rounded-lg clickable-section">
+                    <h2 class="text-2xl font-bold text-blue-primary text-center">Hỗ trợ từ Chính phủ</h2>
+                    <div class="mt-6 space-y-4 bg-gray-100 p-6 rounded-lg">
+                        <div class="bar-horizontal bg-blue-primary text-white p-3 rounded-md shadow text-center font-semibold">Ưu đãi thuế TNDN</div>
+                        <div class="bar-horizontal bg-blue-primary text-white p-3 rounded-md shadow text-center font-semibold">Hỗ trợ hạ tầng & đất đai</div>
+                        <div class="bar-horizontal bg-blue-primary text-white p-3 rounded-md shadow text-center font-semibold">Chính sách đào tạo nhân lực</div>
+                    </div>
+                </section>
+
+                <!-- 5. Tác động dự kiến -->
+                <section id="tac-dong" class="p-4 rounded-lg clickable-section">
+                    <h2 class="text-2xl font-bold text-blue-primary text-center">Tác động dự kiến</h2>
+                    <div class="mt-6 flex justify-around items-end h-48 bg-gray-100 p-4 rounded-lg">
+                        <div class="text-center w-1/4">
+                             <i class="ph-bold ph-users-three text-3xl text-orange-primary mb-1"></i>
+                            <div class="bar bar-vertical bg-orange-primary rounded-t-md mx-auto" style="height: 90%; width: 50%;"></div>
+                            <p class="text-xs mt-1 font-semibold">3.000+ việc làm</p>
+                        </div>
+                        <div class="text-center w-1/4">
+                            <i class="ph-bold ph-arrow-down text-3xl text-blue-primary mb-1"></i>
+                            <div class="bar bar-vertical bg-blue-primary rounded-t-md mx-auto" style="height: 60%; width: 50%;"></div>
+                            <p class="text-xs mt-1 font-semibold">Giảm nhập khẩu</p>
+                        </div>
+                        <div class="text-center w-1/4">
+                             <i class="ph-bold ph-globe text-3xl text-orange-primary mb-1"></i>
+                            <div class="bar bar-vertical bg-orange-primary rounded-t-md mx-auto" style="height: 75%; width: 50%;"></div>
+                            <p class="text-xs mt-1 font-semibold">Vào chuỗi cung ứng</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <hr class="border-gray-200">
+            
+            <!-- 6. Phân tích SWOT -->
+            <section id="swot" class="p-4 rounded-lg clickable-section">
+                <h2 class="text-2xl font-bold text-blue-primary text-center mb-6">Phân tích SWOT</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-light p-6 rounded-lg"><h3 class="font-bold text-xl text-blue-dark">Điểm mạnh</h3><ul class="list-disc list-inside mt-2 space-y-1"><li>Hợp tác quốc tế</li><li>Hỗ trợ tài chính</li><li>Tiềm năng thị trường</li></ul></div>
+                    <div class="bg-orange-light p-6 rounded-lg"><h3 class="font-bold text-xl text-orange-600">Cơ hội</h3><ul class="list-disc list-inside mt-2 space-y-1"><li>Ưu đãi chính phủ</li><li>Nhu cầu chip tăng cao</li></ul></div>
+                    <div class="bg-gray-200 p-6 rounded-lg"><h3 class="font-bold text-xl text-gray-700">Điểm yếu</h3><ul class="list-disc list-inside mt-2 space-y-1"><li>Thiếu nhân lực chất lượng cao</li><li>Hạ tầng chưa hoàn thiện</li></ul></div>
+                    <div class="bg-red-light p-6 rounded-lg"><h3 class="font-bold text-xl text-red-600">Thách thức</h3><ul class="list-disc list-inside mt-2 space-y-1"><li>Cạnh tranh toàn cầu</li><li>Biến động thị trường</li></ul></div>
+                </div>
+            </section>
+            
+            <hr class="border-gray-200">
+
+            <!-- 7. Phân tích thị trường -->
+            <section id="thi-truong" class="p-4 rounded-lg clickable-section">
+                <h2 class="text-2xl font-bold text-blue-primary text-center">Phân tích thị trường</h2>
+                <div class="mt-6 grid md:grid-cols-2 gap-8 text-center">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4">Thị trường Bán dẫn Việt Nam</h3>
+                        <div class="flex justify-center items-end h-48 space-x-8">
+                            <div class="w-20"><p class="font-bold text-blue-primary">8,03</p><div class="bar bar-vertical bg-blue-primary rounded-t-md" style="height: 78%;"></div><p class="mt-1 font-semibold">2024</p></div>
+                            <div class="w-20"><p class="font-bold text-blue-primary">10,21</p><div class="bar bar-vertical bg-blue-primary rounded-t-md" style="height: 100%;"></div><p class="mt-1 font-semibold">2029 (dự báo)</p></div>
+                        </div>
+                        <p class="text-sm mt-2">Đơn vị: tỷ USD. Tăng trưởng kép: 4.93%</p>
+                    </div>
+                    <div>
+                         <h3 class="font-bold text-lg mb-4">Thị trường Bán dẫn Toàn cầu</h3>
+                         <div class="flex justify-center items-end h-48 space-x-8">
+                            <div class="w-20"><p class="font-bold text-orange-primary">680,89</p><div class="bar bar-vertical bg-orange-primary rounded-t-md" style="height: 36%;"></div><p class="mt-1 font-semibold">2024</p></div>
+                            <div class="w-20"><p class="font-bold text-orange-primary">1.883,74</p><div class="bar bar-vertical bg-orange-primary rounded-t-md" style="height: 100%;"></div><p class="mt-1 font-semibold">2032 (dự báo)</p></div>
+                        </div>
+                        <p class="text-sm mt-2">Đơn vị: tỷ USD. Tăng trưởng kép: 13.56%</p>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="border-gray-200">
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- 8. Kế hoạch nhân lực -->
+                <section id="nhan-luc" class="p-4 rounded-lg clickable-section">
+                    <h2 class="text-2xl font-bold text-blue-primary text-center">Kế hoạch nhân lực</h2>
+                    <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-8">
+                        <div class="relative w-48 h-48 rounded-full flex items-center justify-center text-white font-bold" style="background: conic-gradient(var(--blue-primary) 0% 60%, var(--orange-primary) 60% 100%);">
+                            <div class="absolute bg-white w-24 h-24 rounded-full"></div>
+                            <span class="z-10 text-2xl text-gray-800">50.000</span>
+                        </div>
+                        <div class="text-left">
+                             <div class="flex items-center mb-2">
+                                <div class="w-4 h-4 rounded-full bg-blue-primary mr-2"></div><p>Mục tiêu <strong>50.000 kỹ sư</strong> đến 2030</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 rounded-full bg-orange-primary mr-2"></div><p>Hợp tác với <strong>35+ trường ĐH</strong> & CTQT</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 9. Kinh nghiệm quốc tế -->
+                <section id="kinh-nghiem" class="p-4 rounded-lg clickable-section">
+                    <h2 class="text-2xl font-bold text-blue-primary text-center mb-6">Kinh nghiệm quốc tế</h2>
+                    <div class="space-y-4">
+                        <div class="bg-blue-light p-4 rounded-lg flex items-center"><img src="https://flagcdn.com/w40/my.png" alt="Cờ Malaysia" class="w-8 h-auto mr-4 rounded"><p><strong>Malaysia:</strong> Thu hút FDI, xây dựng nhà máy SiC.</p></div>
+                        <div class="bg-blue-light p-4 rounded-lg flex items-center"><img src="https://flagcdn.com/w40/th.png" alt="Cờ Thái Lan" class="w-8 h-auto mr-4 rounded"><p><strong>Thái Lan:</strong> Ưu đãi đầu tư, tập trung vào thiết kế.</p></div>
+                        <div class="bg-blue-light p-4 rounded-lg flex items-center"><img src="https://flagcdn.com/w40/ph.png" alt="Cờ Philippines" class="w-8 h-auto mr-4 rounded"><p><strong>Philippines:</strong> Dẫn đầu mảng lắp ráp, kiểm thử.</p></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- 10. Kết luận -->
+        <footer class="bg-orange-primary text-white p-8 mt-12 text-center relative flex flex-col md:flex-row items-center justify-center gap-6">
+            <i class="ph-fill ph-rocket-launch text-7xl text-blue-dark"></i>
+            <div>
+                 <h2 class="text-2xl font-bold">VietChip Alliance: Cơ hội đưa Việt Nam dẫn đầu!</h2>
+                 <p class="text-lg mt-2 font-semibold">Kêu gọi hành động: Hãy cùng xây dựng tương lai công nghệ bán dẫn.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <h2 id="modal-title" class="text-2xl font-bold text-blue-primary mb-4"></h2>
+            <div id="modal-body" class="text-gray-700 space-y-3"></div>
+            <div id="modal-source" class="modal-source"></div>
+            <div id="modal-close" class="modal-close">✖</div>
+        </div>
+    </div>
+
+<script>
+    // Data for Modals
+    const modalData = {
+        'muc-tieu': {
+            title: 'Chi tiết Mục tiêu & Tầm nhìn',
+            body: `
+                <p><strong>Công nghệ 28nm:</strong> Đây là nút quy trình (process node) "trưởng thành" nhưng vẫn cực kỳ quan trọng. Nó là lựa chọn tối ưu về chi phí và hiệu năng cho một loạt ứng dụng như:
+                <ul class="list-disc list-inside mt-2">
+                    <li>Chip quản lý năng lượng, vi điều khiển (MCU).</li>
+                    <li>Chip xử lý tín hiệu số (DSP) cho viễn thông 5G.</li>
+                    <li>Cảm biến hình ảnh và chip kết nối cho thiết bị IoT.</li>
+                </ul>
+                </p>
+                <p>Việc làm chủ công nghệ 28nm giúp Việt Nam tự chủ được nguồn cung chip cơ bản, giảm phụ thuộc và tạo nền tảng vững chắc.</p>
+                <p><strong>Lộ trình 14nm:</strong> Đây là bước nhảy vọt, thuộc nhóm công nghệ tiên tiến, cần cho các ứng dụng đòi hỏi hiệu năng cao và tiết kiệm năng lượng như:
+                <ul class="list-disc list-inside mt-2">
+                    <li>Chip xử lý cho AI, trung tâm dữ liệu.</li>
+                    <li>CPU/GPU hiệu năng cao cho máy tính, thiết bị di động.</li>
+                    <li>Thiết bị y tế thông minh và hệ thống tự hành.</li>
+                </ul>
+                Mục tiêu này thể hiện tham vọng và tầm nhìn dài hạn, định vị Việt Nam là một điểm đến công nghệ cao trong khu vực.
+                </p>
+            `,
+            source: ``
+        },
+        'chien-luoc': {
+            title: 'Chi tiết Chiến lược triển khai',
+            body: `
+                <p><strong>Giai đoạn 1 (2025–2027): Nền tảng & Nhân lực</strong></p>
+                <ul class="list-disc list-inside">
+                    <li>Hoàn tất thủ tục pháp lý, giải phóng mặt bằng tại Khu Công nghệ cao Hòa Lạc (hoặc địa điểm chiến lược khác).</li>
+                    <li>Xây dựng nhà xưởng, phòng sạch (cleanroom) theo tiêu chuẩn quốc tế.</li>
+                    <li>Ký kết hợp tác chuyển giao công nghệ với đối tác chiến lược từ Mỹ/Nhật Bản/Đài Loan.</li>
+                    <li>Chương trình "500 Kỹ sư Hạt giống": Gửi 200 kỹ sư đào tạo tại nước ngoài, 300 kỹ sư đào tạo chuyên sâu trong nước cùng chuyên gia quốc tế.</li>
+                </ul>
+                <p><strong>Giai đoạn 2 (2027–2030): Vận hành & Tối ưu hóa</strong></p>
+                <ul class="list-disc list-inside">
+                    <li>Lắp đặt dây chuyền sản xuất và bắt đầu vận hành thử (pilot run).</li>
+                    <li>Sản xuất lô chip 28nm thương mại đầu tiên, ưu tiên phục vụ các đơn hàng từ khối quốc phòng và doanh nghiệp viễn thông trong nước.</li>
+                    <li>Xây dựng mạng lưới phân phối và hỗ trợ kỹ thuật.</li>
+                </ul>
+                <p><strong>Giai đoạn 3 (2030–2035): Đột phá & Mở rộng</strong></p>
+                <ul class="list-disc list-inside">
+                    <li>Nghiên cứu và phát triển (R&D) để nâng cấp lên quy trình 14nm.</li>
+                    <li>Mở rộng thị trường xuất khẩu sang các nước ASEAN.</li>
+                    <li>Xây dựng hệ sinh thái phụ trợ: các công ty thiết kế, đóng gói và kiểm thử chip vệ tinh.</li>
+                </ul>
+            `,
+            source: ''
+        },
+        'ho-tro': {
+            title: 'Chi tiết Hỗ trợ từ Chính phủ',
+            body: `
+                <p>Các chính sách hỗ trợ được đề xuất dựa trên các khung pháp lý hiện hành nhằm thu hút đầu tư vào lĩnh vực công nghệ cao:</p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Ưu đãi thuế TNDN:</strong> Áp dụng mức thuế suất ưu đãi 10% trong 15 năm; miễn thuế 4 năm đầu và giảm 50% số thuế phải nộp trong 9 năm tiếp theo (theo Nghị định 131/QĐ-TTg và Luật Đầu tư).</li>
+                    <li><strong>Hỗ trợ hạ tầng và đất đai:</strong> Chính phủ cam kết cấp đất tại các khu công nghệ cao với hạ tầng kỹ thuật (điện, nước, viễn thông) sẵn sàng và ổn định. Miễn, giảm tiền thuê đất, tiền sử dụng đất.</li>
+                    <li><strong>Chính sách đào tạo nhân lực:</strong> Hỗ trợ từ Đề án "Đào tạo và phát triển nguồn nhân lực ngành công nghiệp bán dẫn đến năm 2030, định hướng đến năm 2035", bao gồm tài trợ kinh phí cho các chương trình đào tạo, hợp tác quốc tế, và thu hút chuyên gia.</li>
+                </ul>
+            `,
+            source: `Nguồn: Dựa trên thông tin về Luật Đầu tư 2020 và Đề án phát triển nhân lực bán dẫn của Chính phủ.`
+        },
+        'tac-dong': {
+            title: 'Chi tiết Tác động dự kiến',
+            body: `
+                <p><strong>Tạo hơn 3.000 việc làm chất lượng cao:</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Việc làm trực tiếp:</strong> Khoảng 1.000 - 1.500 kỹ sư, kỹ thuật viên vận hành, chuyên gia R&D.</li>
+                    <li><strong>Việc làm gián tiếp:</strong> Ước tính 2.000 - 3.000 việc làm trong các ngành công nghiệp phụ trợ, dịch vụ, logistics và xây dựng. Các vị trí này đòi hỏi kỹ năng cao và có mức thu nhập vượt trội so với mặt bằng chung.</li>
+                </ul>
+                <p><strong>Giảm phụ thuộc nhập khẩu chip:</strong></p>
+                <p>Năm 2023, Việt Nam nhập khẩu linh kiện điện tử và bán dẫn trị giá hàng chục tỷ USD. Việc tự chủ sản xuất chip 28nm sẽ giúp giảm đáng kể kim ngạch nhập khẩu, đảm bảo an ninh chuỗi cung ứng cho các ngành sản xuất trọng yếu, đặc biệt trong bối cảnh địa chính trị toàn cầu phức tạp.</p>
+                <p><strong>Đưa Việt Nam vào chuỗi cung ứng bán dẫn toàn cầu:</strong></p>
+                <p>Dự án không chỉ sản xuất cho thị trường nội địa mà còn hướng tới xuất khẩu, giúp Việt Nam tham gia vào một khâu có giá trị gia tăng cao hơn trong chuỗi cung ứng, thay vì chỉ tập trung vào lắp ráp, kiểm thử (ATP).</p>
+            `,
+            source: `Nguồn: Tổng hợp từ các phân tích tác động kinh tế của ngành công nghiệp bán dẫn.`
+        },
+         'swot': {
+            title: 'Phân tích SWOT chi tiết',
+            body: `
+                <p><strong>Điểm mạnh (Strengths):</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Hợp tác quốc tế sâu rộng:</strong> Quan hệ đối tác chiến lược toàn diện với Mỹ và các quốc gia công nghệ hàng đầu tạo điều kiện thuận lợi cho chuyển giao công nghệ.</li>
+                    <li><strong>Hỗ trợ tài chính & chính sách:</strong> Cam kết mạnh mẽ từ Chính phủ về ưu đãi và đầu tư công.</li>
+                    <li><strong>Thị trường nội địa tiềm năng:</strong> Nhu cầu lớn từ các tập đoàn sản xuất điện tử lớn đang hoạt động tại Việt Nam (Samsung, LG, Foxconn).</li>
+                </ul>
+                <p><strong>Điểm yếu (Weaknesses):</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Thiếu hụt nhân lực chất lượng cao:</strong> Lực lượng kỹ sư có kinh nghiệm thực tế về thiết kế và chế tạo chip còn rất mỏng.</li>
+                    <li><strong>Hạ tầng công nghiệp phụ trợ:</strong> Hệ sinh thái cho sản xuất vật liệu siêu tinh khiết, hóa chất, và máy móc chính xác chưa phát triển.</li>
+                </ul>
+                <p><strong>Cơ hội (Opportunities):</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Xu hướng dịch chuyển chuỗi cung ứng:</strong> Các tập đoàn toàn cầu đang tìm cách đa dạng hóa chuỗi cung ứng ra ngoài Trung Quốc (chiến lược "Trung Quốc + 1").</li>
+                    <li><strong>Nhu cầu chip toàn cầu tăng vọt:</strong> Sự bùng nổ của AI, 5G, IoT, và xe điện tạo ra nhu cầu khổng lồ về chip.</li>
+                </ul>
+                 <p><strong>Thách thức (Threats):</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Cạnh tranh khốc liệt:</strong> Các quốc gia trong khu vực như Malaysia, Thái Lan, Ấn Độ cũng đang có những chính sách mạnh mẽ để thu hút đầu tư bán dẫn.</li>
+                    <li><strong>Rào cản công nghệ và vốn:</strong> Ngành bán dẫn đòi hỏi vốn đầu tư khổng lồ và công nghệ thay đổi rất nhanh, tạo áp lực phải liên tục nâng cấp.</li>
+                </ul>
+            `,
+            source: `Nguồn: Tổng hợp từ các báo cáo phân tích ngành bán dẫn Việt Nam.`
+        },
+        'thi-truong': {
+            title: 'Phân tích thị trường chi tiết',
+            body: `
+                <p><strong>Thị trường Bán dẫn Việt Nam:</strong></p>
+                <p>Quy mô thị trường được dự báo tăng từ <strong>8,03 tỷ USD (2024)</strong> lên <strong>10,21 tỷ USD (2029)</strong>, với tốc độ tăng trưởng kép hàng năm (CAGR) là 4.93%. Mức tăng trưởng này được thúc đẩy bởi sự phát triển mạnh mẽ của ngành sản xuất thiết bị điện tử tiêu dùng, công nghiệp ô tô và viễn thông.</p>
+                <p><strong>Thị trường Bán dẫn Toàn cầu:</strong></p>
+                <p>Quy mô thị trường toàn cầu được dự báo tăng từ <strong>680,89 tỷ USD (2024)</strong> lên <strong>1.883,74 tỷ USD (2032)</strong>, với CAGR đạt 13.56%. Sự tăng trưởng đột phá này phản ánh nhu cầu chưa từng có cho các công nghệ mới như Trí tuệ nhân tạo (AI), Internet Vạn vật (IoT) và mạng 5G.</p>
+            `,
+            source: `Nguồn: Mordor Intelligence (Thị trường VN), Fortune Business Insights (Thị trường Toàn cầu). Dữ liệu truy cập tháng 6/2024.`
+        },
+        'nhan-luc': {
+            title: 'Chi tiết Kế hoạch nhân lực',
+            body: `
+                <p>Dựa trên Đề án "Đào tạo và phát triển nguồn nhân lực ngành công nghiệp bán dẫn đến năm 2030, định hướng đến năm 2035" được Chính phủ phê duyệt:</p>
+                <p><strong>Mục tiêu:</strong> Đào tạo <strong>50.000 kỹ sư</strong>, trong đó có 15.000 kỹ sư thiết kế chip và 35.000 kỹ sư trong các lĩnh vực khác của ngành.</p>
+                <p><strong>Chiến lược thực hiện:</strong></p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Hợp tác Đại học - Doanh nghiệp:</strong> Xây dựng chương trình đào tạo theo đơn đặt hàng của doanh nghiệp. Các trường đại học hàng đầu như ĐH Bách khoa Hà Nội, ĐH Quốc gia TP.HCM đã thành lập các trung tâm và khoa đào tạo chuyên sâu về bán dẫn.</li>
+                    <li><strong>Thu hút chuyên gia:</strong> Có chính sách đãi ngộ đặc biệt để thu hút các chuyên gia, nhà khoa học Việt kiều và quốc tế về làm việc, giảng dạy.</li>
+                    <li><strong>Hợp tác quốc tế:</strong> Liên kết với các trường đại học, viện nghiên cứu uy tín tại Mỹ, Nhật Bản, Hàn Quốc, Đài Loan để trao đổi sinh viên và giảng viên.</li>
+                </ul>
+            `,
+            source: `Nguồn: Đề án phát triển nhân lực ngành bán dẫn của Chính phủ Việt Nam.`
+        },
+        'kinh-nghiem': {
+            title: 'Chi tiết Kinh nghiệm từ các quốc gia',
+            body: `
+                <p><strong>Malaysia:</strong></p>
+                <p>Tập trung thu hút các dự án FDI "tỷ đô" vào các khâu có giá trị cao. Điển hình là việc Infineon (Đức) đầu tư 5 tỷ euro để xây dựng nhà máy sản xuất wafer silicon carbide (SiC) 8-inch lớn nhất thế giới tại Kulim. <strong>Bài học:</strong> Cần có chính sách ưu đãi đột phá và hạ tầng sẵn sàng để thu hút các "ông lớn" toàn cầu.</p>
+                <p><strong>Thái Lan:</strong></p>
+                <p>Ban Đầu tư (BOI) của Thái Lan cung cấp các gói ưu đãi toàn diện (miễn thuế TNDN tới 13 năm, hỗ trợ R&D) và tập trung phát triển mảng thiết kế vi mạch (fabless), vốn đòi hỏi ít vốn hơn nhà máy chế tạo. <strong>Bài học:</strong> Phát triển song song cả chế tạo và thiết kế để tạo hệ sinh thái hoàn chỉnh.</p>
+                <p><strong>Philippines:</strong></p>
+                <p>Là một trong những trung tâm lớn nhất thế giới về Lắp ráp, Kiểm thử và Đóng gói (ATP), chiếm khoảng 10% nguồn cung toàn cầu. Nước này tận dụng lợi thế về chi phí nhân công và kinh nghiệm lâu năm trong ngành điện tử. <strong>Bài học:</strong> Tận dụng thế mạnh sẵn có (Việt Nam có thế mạnh về lắp ráp) để làm bàn đạp tiến lên các khâu cao hơn.</p>
+            `,
+            source: `Nguồn: Tổng hợp từ các báo cáo đầu tư của BOI (Thái Lan) và tin tức công nghệ quốc tế.`
+        }
+    };
+    
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const modalSource = document.getElementById('modal-source');
+    const closeModalBtn = document.getElementById('modal-close');
+    const clickableSections = document.querySelectorAll('.clickable-section');
+
+    clickableSections.forEach(section => {
+        section.addEventListener('click', () => {
+            const sectionId = section.id;
+            const data = modalData[sectionId];
+            
+            if (data) {
+                modalTitle.textContent = data.title;
+                modalBody.innerHTML = data.body;
+                modalSource.innerHTML = data.source ? `<p><strong>Nguồn:</strong> ${data.source.replace(/href="([^"]*)"/g, 'href="$1" target="_blank" rel="noopener noreferrer"')}</p>` : '';
+                modal.classList.add('active');
+            }
+        });
+    });
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+    };
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+</script>
+</body>
+</html>
