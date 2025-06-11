@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic Tương Tác: Phát triển KHCN, ĐMST, CĐS</title>
+    <!-- Thư viện D3.js để vẽ biểu đồ -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Thư viện Font Awesome cho biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS cho toàn bộ trang */
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #ffffff 0%, #e9ecef 100%);
+            overflow: hidden; /* Ẩn thanh cuộn của body */
+        }
+
+        /* Container cho biểu đồ SVG */
+        #infographic-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* CSS cho các nút trong biểu đồ */
+        .node circle {
+            cursor: pointer;
+            stroke-width: 2px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+        }
+
+        .node .icon {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 16px;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none; /* Cho phép sự kiện click xuyên qua icon */
+        }
+        
+        .node text {
+            font-size: 13px;
+            font-weight: 500;
+            pointer-events: none;
+            fill: #343a40;
+        }
+        
+        .node--internal text {
+            text-shadow: 0 1px 1px #fff, 1px 0 1px #fff, -1px 0 1px #fff, 0 -1px 1px #fff;
+        }
+
+        .node--leaf text {
+            text-shadow: none;
+        }
+
+
+        /* CSS cho các đường nối */
+        .link {
+            fill: none;
+            stroke: #adb5bd;
+            stroke-opacity: 0.7;
+            stroke-width: 2px;
+        }
+
+        /* CSS cho chú thích (tooltip) */
+        .tooltip {
+            position: absolute;
+            background-color: rgba(33, 37, 41, 0.9);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            max-width: 320px;
+            line-height: 1.6;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* CSS cho tiêu đề Infographic */
+        h1 {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            font-weight: 700;
+            color: #212529;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        /* CSS cho các nút điều khiển */
+        .controls {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .controls button {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .controls button:hover {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* CSS cho modal hiển thị ý tưởng */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            width: 80%;
+            max-width: 650px; /* Tăng chiều rộng để hiển thị nội dung dài hơn */
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: left; /* Căn lề trái cho nội dung */
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #212529;
+            font-weight: 700;
+            text-align: center; /* Căn giữa tiêu đề */
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        #idea-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        #idea-list li {
+            padding: 12px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #idea-list li:last-child {
+            border-bottom: none;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+    </style>
+</head>
+<body>
+    <h1>Phát triển KHCN, ĐMST, CĐS quốc gia tại Việt Nam</h1>
+    
+    <!-- Các nút điều khiển -->
+    <div class="controls">
+        <button id="expand-all">Mở rộng tất cả</button>
+        <button id="collapse-all">Thu gọn tất cả</button>
+        <button id="random-ideas">Chọn 2 ý tưởng ngẫu nhiên</button>
+    </div>
+    
+    <!-- Container sẽ chứa biểu đồ SVG -->
+    <div id="infographic-container"></div>
+
+    <!-- Div để hiển thị chú thích khi di chuột -->
+    <div class="tooltip"></div>
+
+    <!-- Modal hiển thị các ý tưởng ngẫu nhiên -->
+    <div id="idea-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Ý tưởng được chọn ngẫu nhiên</h2>
+        <ul id="idea-list"></ul>
+      </div>
+    </div>
+
+
+    <script>
+        // Dữ liệu sơ đồ cây với màu sắc được tinh chỉnh
+        const treeData = {
+          "name": "Phát triển KHCN, ĐMST, CĐS quốc gia",
+          "children": [
+            {
+              "name": "Thể chế", "icon": "\uf0e3", "color": "#4A90E2",
+              "children": [
+                { "name": "Hệ thống pháp luật", "children": [
+                    { "name": "Hoàn thiện Luật Khoa học và Công nghệ" }, { "name": "Ban hành Luật An ninh mạng" }, { "name": "Ban hành Luật Bảo vệ Dữ liệu Cá nhân" }, { "name": "Soạn thảo Luật Khuyến khích đầu tư công nghệ" } ]},
+                { "name": "Cơ chế khuyến khích", "children": [ { "name": "Thành lập Quỹ Đổi mới sáng tạo quốc gia" }, { "name": "Áp dụng ưu đãi thuế" }, { "name": "Hỗ trợ tài chính cho R&D" } ]},
+                { "name": "Quy định dữ liệu", "children": [ { "name": "Ban hành quy định bảo mật dữ liệu" }, { "name": "Xây dựng cơ chế chia sẻ dữ liệu an toàn" }, { "name": "Thiết lập quy định về an ninh dữ liệu" } ]},
+                { "name": "Hợp tác quốc tế", "children": [ { "name": "Ký kết hiệp định chuyển giao công nghệ" }, { "name": "Tham gia diễn đàn quốc tế về KHCN" }, { "name": "Tổ chức chương trình trao đổi chuyên gia" } ]},
+                { "name": "Cải cách hành chính", "children": [ { "name": "Đơn giản hóa thủ tục hành chính" }, { "name": "Số hóa dịch vụ công" }, { "name": "Tăng cường minh bạch thông tin" } ]}
+              ]
+            },
+            {
+              "name": "Hạ tầng", "icon": "\uf1ad", "color": "#50E3C2",
+              "children": [
+                { "name": "Hạ tầng CNTT", "children": [ { "name": "Xây dựng mạng lưới quang xuyên quốc gia" }, { "name": "Phủ sóng 5G" }, { "name": "Phát triển trung tâm dữ liệu" } ]},
+                { "name": "Hạ tầng nghiên cứu", "children": [ { "name": "Xây dựng trung tâm nghiên cứu quốc gia" }, { "name": "Trang bị thiết bị nghiên cứu hiện đại" }, { "name": "Hỗ trợ phòng thí nghiệm công nghệ cao" } ]},
+                { "name": "Hạ tầng vật lý", "children": [ { "name": "Đảm bảo cung cấp điện ổn định" }, { "name": "Nâng cấp hệ thống giao thông" }, { "name": "Phát triển cơ sở hạ tầng đô thị thông minh" } ]},
+                { "name": "Khu công nghệ cao", "children": [ { "name": "Phát triển khu công nghệ cao tại tỉnh trọng điểm" }, { "name": "Hỗ trợ đầu tư khu đổi mới sáng tạo" }, { "name": "Xây dựng khu công nghiệp số" } ]},
+                { "name": "Kết nối số", "children": [ { "name": "Phủ sóng internet tốc độ cao" }, { "name": "Giảm chi phí truy cập internet" }, { "name": "Đào tạo kỹ năng số cho vùng sâu" } ]}
+              ]
+            },
+            {
+              "name": "Nhân lực chất lượng cao", "icon": "\uf0c0", "color": "#F5A623",
+              "children": [
+                { "name": "Đào tạo chuyên sâu", "children": [ { "name": "Xây dựng chương trình đào tạo AI" }, { "name": "Xây dựng chương trình đào tạo blockchain" }, { "name": "Hợp tác với đại học quốc tế" } ]},
+                { "name": "Thu hút nhân tài", "children": [ { "name": "Ban hành chính sách đãi ngộ, học bổng" }, { "name": "Tạo môi trường làm việc sáng tạo" }, { "name": "Thu hút chuyên gia từ nước ngoài" } ]},
+                { "name": "Hợp tác giáo dục", "children": [ { "name": "Liên kết với đại học hàng đầu" }, { "name": "Tổ chức trao đổi sinh viên, giảng viên" }, { "name": "Thúc đẩy hợp tác nghiên cứu quốc tế" } ]},
+                { "name": "Kỹ năng số", "children": [ { "name": "Tích hợp giáo dục kỹ năng số" }, { "name": "Đào tạo kỹ năng số cho lao động" }, { "name": "Khuyến khích học tập suốt đời" } ]},
+                { "name": "Văn hóa sáng tạo", "children": [ { "name": "Tổ chức cuộc thi đổi mới sáng tạo" }, { "name": "Xây dựng cộng đồng khởi nghiệp" }, { "name": "Khuyến khích tư duy sáng tạo" } ]}
+              ]
+            },
+            {
+              "name": "Công nghệ chiến lược", "icon": "\uf2db", "color": "#9013FE",
+              "children": [
+                { "name": "Trí tuệ nhân tạo", "children": [ { "name": "Phát triển chiến lược quốc gia về AI" }, { "name": "Ứng dụng AI trong y tế" }, { "name": "Ứng dụng AI trong giáo dục" } ]},
+                { "name": "Internet vạn vật", "children": [ { "name": "Thúc đẩy IoT trong thành phố thông minh" }, { "name": "Phát triển nền tảng IoT quốc gia" }, { "name": "Ứng dụng IoT trong nông nghiệp" } ]},
+                { "name": "Blockchain", "children": [ { "name": "Nghiên cứu blockchain trong quản lý" }, { "name": "Xây dựng dự án thí điểm blockchain" }, { "name": "Ứng dụng blockchain trong tài chính" } ]},
+                { "name": "Công nghệ xanh", "children": [ { "name": "Đầu tư năng lượng tái tạo" }, { "name": "Phát triển công nghệ tiết kiệm năng lượng" }, { "name": "Ứng dụng công nghệ bảo vệ môi trường" } ]},
+                { "name": "Công nghệ sinh học", "children": [ { "name": "Nghiên cứu gene, vaccine" }, { "name": "Ứng dụng trong nông nghiệp" }, { "name": "Sản xuất chế phẩm sinh học" } ]}
+              ]
+            },
+            {
+              "name": "Dữ liệu", "icon": "\uf1c0", "color": "#D0021B",
+              "children": [
+                { "name": "Quản lý dữ liệu", "children": [ { "name": "Xây dựng hệ thống cơ sở dữ liệu quốc gia" }, { "name": "Ban hành quy chuẩn quản lý dữ liệu" }, { "name": "Giám sát chất lượng dữ liệu" } ]},
+                { "name": "Khai thác big data", "children": [ { "name": "Ứng dụng big data trong phân tích kinh tế" }, { "name": "Phát triển nền tảng phân tích dữ liệu" }, { "name": "Hỗ trợ ra quyết định dựa trên dữ liệu" } ]},
+                { "name": "Bảo mật dữ liệu", "children": [ { "name": "Tăng cường biện pháp an ninh mạng" }, { "name": "Đào tạo nhận thức bảo mật dữ liệu" }, { "name": "Ban hành quy định xử lý vi phạm" } ]},
+                { "name": "Chia sẻ dữ liệu", "children": [ { "name": "Xây dựng nền tảng chia sẻ dữ liệu" }, { "name": "Ban hành chính sách chia sẻ dữ liệu" }, { "name": "Thúc đẩy hợp tác chia sẻ dữ liệu quốc tế" } ]},
+                { "name": "Dữ liệu mở", "children": [ { "name": "Cung cấp dữ liệu công khai" }, { "name": "Khuyến khích sử dụng dữ liệu mở" }, { "name": "Hỗ trợ nghiên cứu từ dữ liệu mở" } ]}
+              ]
+            }
+          ]
+        };
+
+        // Thiết lập kích thước và lề
+        const container = document.getElementById('infographic-container');
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        const margin = { top: 100, right: 120, bottom: 100, left: 120 };
+
+        // Tạo SVG container
+        const svg = d3.select("#infographic-container").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.zoom().on("zoom", (event) => {
+               g.attr("transform", event.transform);
+            }))
+            .append("g");
+            
+        // Dịch chuyển nhóm g để có lề và căn giữa ban đầu
+        const g = svg.append("g").attr("transform", `translate(${margin.left + 100},${height / 2})`);
+
+        // Tạo layout cây
+        const treeLayout = d3.tree().nodeSize([40, 240]);
+
+        // Tạo cấu trúc phân cấp từ dữ liệu
+        const root = d3.hierarchy(treeData, d => d.children);
+        
+        root.x0 = height / 2;
+        root.y0 = 0;
+        
+        let i = 0;
+        const duration = 600;
+
+        root.children.forEach(collapse);
+        
+        update(root);
+
+        function collapse(d) {
+          if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+          }
+        }
+
+        function expand(d) {
+            if (d._children) {
+                d.children = d._children;
+                d.children.forEach(expand);
+                d._children = null;
+            } else if (d.children) {
+                d.children.forEach(expand);
+            }
+        }
+
+        d3.select('#expand-all').on('click', () => {
+            expand(root);
+            update(root);
+        });
+
+        d3.select('#collapse-all').on('click', () => {
+            root.children.forEach(collapse);
+            update(root);
+        });
+
+
+        function update(source) {
+            const treeData = treeLayout(root);
+            const nodes = root.descendants();
+            const links = root.descendants().slice(1);
+
+            nodes.forEach(d => { d.y = d.depth * 220 });
+
+            const node = g.selectAll('g.node')
+                .data(nodes, d => d.id || (d.id = ++i));
+
+            const nodeEnter = node.enter().append('g')
+                .attr('class', d => `node ${d.children || d._children ? "node--internal" : "node--leaf"}`)
+                .attr("transform", d => `translate(${source.y0},${source.x0})`)
+                .on('click', click)
+                .on('mouseover', mouseover)
+                .on('mouseout', mouseout);
+
+            nodeEnter.append('circle')
+                .attr('r', 1e-6)
+                .style("fill", d => d._children ? (d.data.color || "#555") : "#fff")
+                .style("stroke", d => d.data.color || "#555");
+                
+            nodeEnter.filter(d => d.depth === 1 || (d.depth === 0 && d._children)).append('text')
+                .attr('class', 'icon')
+                .attr('fill', '#fff')
+                .text(d => d.data.icon);
+                
+            nodeEnter.append('text')
+                .attr("dy", ".35em")
+                .attr("x", d => {
+                  const radius = (d.depth === 0) ? 20 : (d.depth === 1 ? 16 : 12);
+                  return d.children || d._children ? -radius -5 : radius + 5;
+                })
+                .attr("text-anchor", d => d.children || d._children ? "end" : "start")
+                .text(d => d.data.name)
+                .style('font-weight', d => (d.depth < 2) ? '700' : '400');
+
+            const nodeUpdate = nodeEnter.merge(node);
+
+            nodeUpdate.transition()
+                .duration(duration)
+                .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            nodeUpdate.select('circle')
+                .attr('r', d => (d.depth === 0) ? 20 : (d.depth === 1 ? 16 : 10))
+                .style("fill", d => d._children ? (d.data.color || "#555") : "#fff")
+                .style("stroke", d => d.data.color || "#999");
+            
+            const nodeExit = node.exit().transition()
+                .duration(duration)
+                .attr("transform", d => `translate(${source.y},${source.x})`)
+                .remove();
+
+            nodeExit.select('circle').attr('r', 1e-6);
+            nodeExit.select('text').style('fill-opacity', 1e-6);
+
+            const link = g.selectAll('path.link')
+                .data(links, d => d.id);
+
+            const linkEnter = link.enter().insert('path', "g")
+                .attr("class", "link")
+                .attr('d', d => {
+                    const o = {x: source.x0, y: source.y0};
+                    return diagonal(o, o);
+                });
+
+            linkEnter.merge(link).transition()
+                .duration(duration)
+                .attr('d', d => diagonal(d, d.parent));
+
+            link.exit().transition()
+                .duration(duration)
+                .attr('d', d => {
+                    const o = {x: source.x, y: source.y};
+                    return diagonal(o, o);
+                })
+                .remove();
+
+            nodes.forEach(d => {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+
+            function diagonal(s, d) {
+                return `M ${s.y} ${s.x}
+                        C ${(s.y + d.y) / 2} ${s.x},
+                          ${(s.y + d.y) / 2} ${d.x},
+                          ${d.y} ${d.x}`;
+            }
+
+            function click(event, d) {
+                if(d.depth === 0) return; // Không cho phép đóng/mở nút gốc
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update(d);
+            }
+        }
+        
+        const tooltip = d3.select(".tooltip");
+        
+        function mouseover(event, d) {
+            tooltip.style("opacity", 1)
+                   .html(`<strong>${d.data.name}</strong>`) 
+                   .style("left", (event.pageX + 15) + "px")
+                   .style("top", (event.pageY - 28) + "px");
+        }
+
+        function mouseout() {
+            tooltip.style("opacity", 0);
+        }
+
+        // ---- LOGIC CHO MODAL Ý TƯỞNG NGẪU NHIÊN ----
+        const modal = document.getElementById("idea-modal");
+        const randomBtn = document.getElementById("random-ideas");
+        const closeBtn = document.getElementsByClassName("close-button")[0];
+        const ideaList = document.getElementById("idea-list");
+
+        randomBtn.onclick = function() {
+            // Lấy tất cả các nút ở cấp 3 (các ý tưởng chi tiết)
+            const level3Nodes = root.descendants().filter(d => d.depth === 3 && d.data.name);
+
+            // Gom nhóm các ý tưởng cấp 3 theo nút cha (cấp 2)
+            const groups = {};
+            level3Nodes.forEach(node => {
+                const parentId = node.parent.id; // Sử dụng ID duy nhất của nút cha
+                if (!groups[parentId]) {
+                    groups[parentId] = [];
+                }
+                groups[parentId].push(node);
+            });
+
+            // Lấy danh sách các nhóm cha có chứa ý tưởng
+            const availableGroups = Object.values(groups);
+
+            // **UPDATE**: Kiểm tra xem có ít nhất 2 nhóm cấp 2 khác nhau không
+            if (availableGroups.length < 2) {
+                ideaList.innerHTML = '<li>Cần có ít nhất 02 nhóm ý tưởng cấp 2 khác nhau!</li>';
+                modal.style.display = "block";
+                return;
+            }
+
+            // Trộn ngẫu nhiên danh sách các nhóm
+            const shuffledGroups = availableGroups.sort(() => 0.5 - Math.random());
+            
+            // Chọn 2 nhóm đầu tiên
+            const group1 = shuffledGroups[0];
+            const group2 = shuffledGroups[1];
+
+            // Chọn ngẫu nhiên 1 ý tưởng từ mỗi nhóm đã chọn
+            const idea1 = group1[Math.floor(Math.random() * group1.length)];
+            const idea2 = group2[Math.floor(Math.random() * group2.length)];
+
+            const selectedIdeas = [idea1, idea2];
+
+            // Hiển thị các ý tưởng đã chọn trong modal
+            ideaList.innerHTML = ''; 
+            selectedIdeas.forEach(idea => {
+                const li = document.createElement('li');
+                const parentName = idea.parent.data.name;
+                const grandParentName = idea.parent.parent.data.name;
+                li.innerHTML = `<strong>${idea.data.name}</strong> <br><small>(thuộc nhóm ${grandParentName} | ${parentName})</small>`;
+                ideaList.appendChild(li);
+            });
+
+            modal.style.display = "block";
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            const newWidth = container.clientWidth;
+            const newHeight = container.clientHeight;
+            d3.select('svg').attr('width', newWidth).attr('height', newHeight);
+        });
+
+    </script>
+</body>
+</html>
